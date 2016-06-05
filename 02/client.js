@@ -1,8 +1,15 @@
 const nano = require('nanomsg');
-const push = nano.socket('push');
+const pull = nano.socket('pull');
 const addr = 'tcp://127.0.0.1:7789';
 
-push.bind(addr);
+pull.connect(addr);
 
-let n = 1;
-Array.from(new Array(100), () => push.send(n++));
+pull.on('data', (buffer) => {
+    pull.pause();
+    console.log('got data');
+
+    setTimeout(function () {
+      console.log(Number(buffer));
+      pull.resume();
+    }, 500);
+});
