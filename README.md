@@ -1,0 +1,2 @@
+# distributed-patterns-workshop
+#nodeconfoslo
